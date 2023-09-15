@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://y0n9.github.io</id>
+    <title>黄弟学编程</title>
+    <updated>2023-09-15T03:26:20.010Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://y0n9.github.io"/>
+    <link rel="self" href="https://y0n9.github.io/atom.xml"/>
+    <subtitle>我这一生只读两本书，一本是有字的书，一本是无字的书！！！</subtitle>
+    <logo>https://y0n9.github.io/images/avatar.png</logo>
+    <icon>https://y0n9.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, 黄弟学编程</rights>
+    <entry>
+        <title type="html"><![CDATA[(fix bug 记录) husky - pre-commit hook exited with code 1 (error)]]></title>
+        <id>https://y0n9.github.io/post/fix-bug-ji-lu-husky-pre-commit-hook-exited-with-code-1-error/</id>
+        <link href="https://y0n9.github.io/post/fix-bug-ji-lu-husky-pre-commit-hook-exited-with-code-1-error/">
+        </link>
+        <updated>2023-08-21T06:50:21.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="背景">背景</h3>
+<p>使用husky添加 git hook 的时候， 运行 git commit -m 'test' 就产生了如下图示的错误，google了很多资料，大部分都是执行 git commit --no-verify 以绕过 pre-commit 钩子的检察环节，那这样我们使用husky还有什么意义呢？直接卸载不是更舒畅么？最终在<a href="https://github.com/typicode/husky/issues/1014#issuecomment-1144349941">这里</a>找到了答案</p>
+<h3 id="重现">重现</h3>
+<figure data-type="image" tabindex="1"><img src="https://y0n9.github.io/post-images/1692600932926.png" alt="" loading="lazy"></figure>
+<h3 id="产生原因">产生原因</h3>
+<p>由于.git文件夹是不会被git跟踪的，可能在前面的操作中，把全局配置core.hooksPath配置成错误的选项</p>
+<h3 id="如何解决">如何解决</h3>
+<p>如果该选项已在您的本地存储库中设置并且您想撤消它，则 git config --unset core.hooksPath 取消设置它就足够了，这将使 Git 选择默认选项。</p>
+]]></content>
+    </entry>
+</feed>
