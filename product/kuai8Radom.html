@@ -1,0 +1,116 @@
+<!--
+ * @Author: paulWong
+ * @LastEditors: paulWong
+ * @Description: 页面头部注释
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            text-align: center;
+        }
+        #selectEle {
+            font-size: 24px;
+        }
+        .showData {
+            font-size:24px;
+            width: 300px;
+            margin: 20px auto 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>福彩快乐8 -- 全号码随机生成</h1>
+        <select id="selectEle"></select>
+        <div class="showData"></div>
+    </div>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
+    <script>
+        ;(function(){
+            function shuffle(array) {
+                let currentIndex = array.length;
+                let temporaryValue, randomIndex;
+                array = array.sort(() => Math.random() - 0.5);
+
+                while (0 !== currentIndex) {
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+                
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+                
+                return array;
+            }
+                
+            function splitIntoGroups(array, groupCount) {
+                const shuffledArray = shuffle(array);
+                const groupSize = Math.ceil(shuffledArray.length / groupCount);
+                let groupsArr = [];
+                
+                for (let i = 0; i < groupCount; i++) {
+                    groupsArr.push(shuffledArray.slice(i * groupSize, (i + 1) * groupSize));
+                }
+
+                // 排序
+                const groupsSort = [];
+                groupsArr.forEach((item) => {
+                    groupsSort.push(item.sort((a, b) => {
+                        return a - b;
+                    }));
+                });
+                return groupsSort;
+            }
+
+            // 打印出来
+            function printGroup(arr) {
+                $('.showData').html('')
+                let str = '';
+                arr.forEach((item) => {
+                    str += item + '<br /><br />';
+                })
+                $('.showData').html(str)
+            }
+
+            const optionObj = {
+                1: '选一',
+                2: '选二',
+                4: '选四',
+                5: '选五',
+                8: '选八',
+                10: '选十'
+            };
+
+            for (let obj in optionObj) {
+                // 创建新的option元素
+                var option = $('<option></option>').attr("value", obj).text(optionObj[obj]);
+            
+                // 将option添加到select中
+                $('#selectEle').append(option);
+            }
+
+            $('#selectEle').on('change',function(){
+                const allNumArr = [];
+
+                for (let i=1;i<=80;i++) {
+                    i = i < 10 ? '0' + i : i;
+                    allNumArr.push(i);
+                }
+                // 乱序后数组
+                // const allNumShuffleArr = shuffle(allNumArr);
+                    
+                const groupCount = 80 / Number($('#selectEle').val());// 分组个数
+                const groups = splitIntoGroups(allNumArr, groupCount);
+                printGroup(groups);
+            });
+                
+        })();
+    </script>
+</body>
+</html>
